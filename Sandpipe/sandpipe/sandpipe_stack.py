@@ -19,6 +19,6 @@ class SandpipeStack(cdk.Stack):
                             input=CodePipelineSource.connection("FarrOut/InsurgencySandstormDedicatedServer", "main",
                             connection_arn=connection_arn,
                             ),
-                            commands=["npm install -g aws-cdk", "cdk synth"]
+                            commands=["npm install -g aws-cdk", "cdk synth --app \"python app.py\""]
                         )
                     )

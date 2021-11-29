@@ -34,6 +34,7 @@ class SandpipeStack(cdk.Stack):
 
         pipeline = CodePipeline(self, "Sandpipe",
                                 pipeline_name="Sandpipe",
+                                cross_account_keys=True,
                                 synth=ShellStep("Synth",
                                                 input=CodePipelineSource.connection(
                                                     "FarrOut/InsurgencySandstormDedicatedServer", "main",

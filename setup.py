@@ -21,6 +21,7 @@ setuptools.setup(
         "aws_cdk.pipelines",
         "aws_cdk.aws_lambda",
         "aws_cdk.aws_imagebuilder",
+        "aws_cdk.aws_ecs_patterns",
     ],
 
     python_requires=">=3.6",

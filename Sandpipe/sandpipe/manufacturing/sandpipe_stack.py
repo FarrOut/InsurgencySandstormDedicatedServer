@@ -8,6 +8,8 @@ from aws_cdk import (core as cdk,
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
 import boto3, json, logging
 
+from sandpipe.manufacturing.bake_stage import BakeStage
+
 
 class SandpipeStack(cdk.Stack):
 
@@ -27,7 +29,12 @@ class SandpipeStack(cdk.Stack):
         )['SecretString'])
         connection_arn_ = connection_secret_value['FarrOut']
 
-        if connection_secret.secret_value is None:
+        github_source = CodePipelineSource.connection(
+            "FarrOut/InsurgencySandstormDedicatedServer", "feature/image_oven",
+            connection_arn=connection_arn_,
+        )
+
+        if github_source is None:
             logger.warning('Unable to retrieve GitHub Connection!')
         else:
             logger.info('Found GitHub Connection.')
@@ -36,12 +43,14 @@ class SandpipeStack(cdk.Stack):
                                 pipeline_name="Sandpipe",
                                 cross_account_keys=True,
                                 synth=ShellStep("Synth",
-                                                input=CodePipelineSource.connection(
-                                                    "FarrOut/InsurgencySandstormDedicatedServer", "main",
-                                                    connection_arn=connection_arn_,
-                                                    ),
+                                                input=github_source,
                                                 commands=["npm install -g aws-cdk",
                                                           "python -m pip install -r requirements.txt",
                                                           "cdk synth"]
-                                                )
+                                                ),
+                                # Turn this on because the pipeline uses Docker image assets
+                                docker_enabled_for_self_mutation=True
                                 )
+
+        baking = BakeStage(self, 'BakeStage', source=github_source)
+        pipeline.add_stage(baking)

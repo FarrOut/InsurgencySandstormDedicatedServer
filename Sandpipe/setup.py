@@ -1,9 +1,7 @@
 import setuptools
 
-
 with open("README.md") as fp:
     long_description = fp.read()
-
 
 setuptools.setup(
     name="sandpipe",
@@ -21,7 +19,8 @@ setuptools.setup(
     install_requires=[
         "aws-cdk.core==1.119.0",
         "aws_cdk.pipelines",
-        "aws_cdk.aws_lambda"
+        "aws_cdk.aws_lambda",
+        "aws_cdk.aws_imagebuilder",
     ],
 
     python_requires=">=3.6",

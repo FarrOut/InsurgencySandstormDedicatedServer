@@ -22,6 +22,9 @@ class OvenStack(cdk.Stack):
         # aws-samples/aws-cdk-imagebuilder-pipeline
         # https://github.com/aws-samples/aws-cdk-imagebuilder-pipeline
 
+        # codepipeline-docker-build
+        # https://github.com/aws-samples/aws-cdk-examples/tree/master/python/codepipeline-docker-build
+
         git_hub_source = codebuild.Source.git_hub(
             owner="FarrOut",
             repo="InsurgencySandstormDedicatedServer",
@@ -34,7 +37,10 @@ class OvenStack(cdk.Stack):
         )
 
         CodeBuildStep("BuildDockerfile",
-                      install_commands=[],
+                      install_commands=[
+                          'nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 '
+                          '--storage-driver=overlay&',
+                          'timeout 15 sh -c "until docker info; do echo .; sleep 1; done"'],
                       env={"REPOSITORY_URI": "FarrOut/InsurgencySandstormDedicatedServer"},
                       commands=["docker build -t $REPOSITORY_URI:latest ."],
                       build_environment=codebuild.BuildEnvironment(

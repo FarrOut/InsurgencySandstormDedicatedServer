@@ -44,7 +44,9 @@ class SandpipeStack(cdk.Stack):
                                 cross_account_keys=True,
                                 synth=ShellStep("Synth",
                                                 input=github_source,
-                                                install_commands=["npm install -g aws-cdk"],
+                                                install_commands=["npm install -g aws-cdk",
+                                                                  "ls -a",
+                                                                  "python -m pip install -r Sandpipe/requirements.txt",],
                                                 commands=["cdk synth"]
                                                 ),
                                 # Turn this on because the pipeline uses Docker image assets

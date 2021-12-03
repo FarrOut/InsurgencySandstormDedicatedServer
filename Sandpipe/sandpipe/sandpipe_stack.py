@@ -45,7 +45,8 @@ class SandpipeStack(cdk.Stack):
                                 synth=ShellStep("Synth",
                                                 input=github_source,
                                                 install_commands=["npm install -g aws-cdk",
-                                                                  "ls -a",
+                                                                  "ls -a Sandpipe/",
+                                                                  'python -m pip install --upgrade pip',
                                                                   "python -m pip install -r Sandpipe/requirements.txt",],
                                                 commands=["cdk synth"]
                                                 ),

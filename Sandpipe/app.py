@@ -10,7 +10,7 @@ from aws_cdk import core
 
 # Environments
 from sandpipe.gameserver_stack import GameserverStack
-from sandpipe.manufacturing.sandpipe_stack import SandpipeStack
+from Sandpipe.sandpipe.sandpipe_stack import SandpipeStack
 
 env_cpt = core.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region='af-south-1')
 

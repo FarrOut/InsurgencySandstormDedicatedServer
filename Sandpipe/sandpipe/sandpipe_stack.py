@@ -47,7 +47,7 @@ class SandpipeStack(cdk.Stack):
                                                 install_commands=["npm install -g aws-cdk",
                                                                   "ls -a Sandpipe/",
                                                                   'python -m pip install --upgrade pip',
-                                                                  "python -m pip install -r Sandpipe/requirements.txt",],
+                                                                  "cd Sandpipe/ || python -m pip install -r requirements.txt",],
                                                 commands=["cdk synth"]
                                                 ),
                                 # Turn this on because the pipeline uses Docker image assets

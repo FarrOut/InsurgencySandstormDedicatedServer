@@ -1,19 +1,17 @@
-from aws_cdk import (core as cdk,
-                     aws_ec2 as ec2,
-                     pipelines,
-                     aws_codepipeline as codepipeline,
-                     aws_codepipeline_actions as cpactions,
-                     aws_secretsmanager,
-                     aws_ecs_patterns as ecs_patterns,
-                     aws_ecs as ecs,
-                     )
-from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
-import boto3, json, logging
+import logging
+
+import aws_cdk as cdk
+from aws_cdk import (
+    aws_ec2 as ec2,
+    aws_ecs as ecs,
+    aws_ecs_patterns as ecs_patterns,
+)
+from constructs import Construct
 
 
 class GameserverStack(cdk.Stack):
 
-    def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         logger = logging.getLogger()

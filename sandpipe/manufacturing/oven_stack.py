@@ -1,13 +1,13 @@
-from aws_cdk import (core as cdk,
-                     aws_codebuild as codebuild,
-                     aws_imagebuilder as imagebuilder,
-                     aws_logs as logs,
-                     )
-from aws_cdk.pipelines import CodePipelineSource, ShellStep, CodeBuildStep
+from aws_cdk import (
+    aws_codebuild as codebuild,
+    Stack,
+)
+from aws_cdk.pipelines import CodePipelineSource, CodeBuildStep
+from constructs import Construct
 
 
-class OvenStack(cdk.Stack):
-    def __init__(self, scope: cdk.Construct, construct_id: str, source: CodePipelineSource, **kwargs) -> None:
+class OvenStack(Stack):
+    def __init__(self, scope: Construct, construct_id: str, source: CodePipelineSource, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # Docker sample for CodeBuild
@@ -46,7 +46,7 @@ class OvenStack(cdk.Stack):
                       build_environment=codebuild.BuildEnvironment(
                           # The user of a Docker image asset in the pipeline requires turning on
                           # 'dockerEnabledForSelfMutation'.
-                          build_image=codebuild.LinuxBuildImage.UBUNTU_14_04_DOCKER_18_09_0,
+                          # build_image=codebuild.LinuxBuildImage.UBUNTU_14_04_DOCKER_18_09_0,
                           privileged=True,
 
                       ),

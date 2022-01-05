@@ -16,29 +16,18 @@ from sandpipe.manufacturing.bake_stage import BakeStage
 
 class SandpipeStack(Stack):
 
-    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, connection_arn: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         logger = logging.getLogger()
 
-        connection_secret = Secret.from_secret_name_v2(self, "GitHubConnectionSecret",
-                                                       'GitHub/FarrOut/connection')
-
-        secretsmanager_ = boto3.client('secretsmanager')
-
-        # # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/secretsmanager.html#SecretsManager.Client.get_secret_value
-        connection_secret_value = json.loads(secretsmanager_.get_secret_value(
-            SecretId='GitHub/FarrOut/connection',
-        )['SecretString'])
-        connection_arn_ = connection_secret_value['FarrOut']
-
         CfnOutput(self, 'ConnectionArn',
-                  value=connection_arn_,
+                  value=connection_arn,
                   )
 
         github_source = CodePipelineSource.connection(
             "FarrOut/InsurgencySandstormDedicatedServer", "feature/image_oven",
-            connection_arn=connection_arn_,
+            connection_arn=connection_arn,
         )
 
         if github_source is None:

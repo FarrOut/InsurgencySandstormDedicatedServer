@@ -18,8 +18,8 @@ class InsurgencySandstormDedicatedServerStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str,
                  removal_policy: RemovalPolicy = RemovalPolicy.RETAIN,
-                 game_port: int = 1337,
-                 query_port: int = 1338,
+                 game_port: int = 12345,
+                 query_port: int = 54321,
                  **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 

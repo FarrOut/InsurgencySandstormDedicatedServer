@@ -7,9 +7,14 @@ from insurgency_sandstorm_dedicated_server.insurgency_sandstorm_dedicated_server
 
 
 app = cdk.App()
+
+default_env = cdk.Environment(account=os.getenv(
+    'CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION'))
+africa_env = cdk.Environment(account=os.getenv(
+    'CDK_DEFAULT_ACCOUNT'), region='af-south-1')
+
 InsurgencySandstormDedicatedServerStack(app, "InsurgencySandstormDedicatedServerStack",
-                                        env=cdk.Environment(account=os.getenv(
-                                            'CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
+                                        env=africa_env,
                                         removal_policy=cdk.RemovalPolicy.DESTROY,
                                         )
 

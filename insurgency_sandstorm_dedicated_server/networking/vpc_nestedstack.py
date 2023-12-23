@@ -22,7 +22,7 @@ class VpcNestedStack(NestedStack):
                            # 'maxAzs' configures the maximum number of availability zones to use.
                            # If you want to specify the exact availability zones you want the VPC
                            # to use, use `availabilityZones` instead.
-                           max_azs=1,
+                           max_azs=2,
 
 
                            # 'subnetConfiguration' specifies the "subnet groups" to create.

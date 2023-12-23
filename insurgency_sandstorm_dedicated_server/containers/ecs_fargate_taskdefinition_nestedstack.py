@@ -23,7 +23,7 @@ class EcsFargateTaskDefinitionNestedStack(NestedStack):
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        self.task_def = ecs.FargateTaskDefinition(
+        self.task_definition = ecs.FargateTaskDefinition(
             self,
             "TaskDef",
             memory_limit_mib=512,
@@ -46,13 +46,15 @@ class EcsFargateTaskDefinitionNestedStack(NestedStack):
         container_def = ecs.ContainerDefinition(
             self,
             "ContainerDef",
-            task_definition=self.task_def,
+            task_definition=self.task_definition,
             image=ContainerImage.from_registry(
                 "andrewmhub/insurgency-sandstorm:latest"),
             port_mappings=[
-                ecs.PortMapping(container_port=game_port,
+                ecs.PortMapping(container_port=80, host_port=80,
+                                protocol=ecs.Protocol.TCP),
+                ecs.PortMapping(container_port=game_port, host_port=game_port,
                                 protocol=ecs.Protocol.UDP),
-                ecs.PortMapping(container_port=query_port,
+                ecs.PortMapping(container_port=query_port, host_port=query_port,
                                 protocol=ecs.Protocol.UDP)
             ],
             logging=ecs.AwsLogDriver(

@@ -2,6 +2,7 @@
 import os
 
 import aws_cdk as cdk
+from insurgency_sandstorm_dedicated_server.image_oven_stack import ImageOvenStack
 
 from insurgency_sandstorm_dedicated_server.insurgency_sandstorm_dedicated_server_stack import InsurgencySandstormDedicatedServerStack
 
@@ -17,5 +18,10 @@ InsurgencySandstormDedicatedServerStack(app, "InsurgencySandstormDedicatedServer
                                         env=africa_env,
                                         removal_policy=cdk.RemovalPolicy.DESTROY,
                                         )
+
+ImageOvenStack(app, "ImageOvenStack",
+               env=africa_env,
+               removal_policy=cdk.RemovalPolicy.DESTROY,
+               )
 
 app.synth()
